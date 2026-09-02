@@ -1,7 +1,7 @@
 # Digital Twin for Computer Systems
 
-[![Tests](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Aryam92/digital-twin-for-computer-systems)
+[![Tests](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml)
 A Python-based digital twin for monitoring, analyzing, and simulating
 computer system health.
 
