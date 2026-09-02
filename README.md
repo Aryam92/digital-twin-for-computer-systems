@@ -46,3 +46,10 @@ Health Report          Simulated Snapshot
                 |
                 v
              Dashboard
+
+
+## How to Run
+
+1. Navigate to the project directory:
+```cmd
+cd digital_twin
