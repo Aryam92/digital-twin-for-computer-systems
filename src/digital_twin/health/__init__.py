@@ -1,6 +1,5 @@
 """System health evaluation and reporting."""
 
-from .analyzer import SystemHealthAnalyzer, HealthReport, HealthStatus
+from .analyzer import HealthReport, HealthStatus, SystemHealthAnalyzer
 
-
-__all__ = ["HealthAnalyzer", "HealthReport", "HealthStatus"]
+__all__ = ["SystemHealthAnalyzer", "HealthReport", "HealthStatus"]
