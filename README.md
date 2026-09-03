@@ -5,7 +5,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A production-grade Python implementation of a **Digital Twin** designed for real-time computer hardware and operating system monitoring, dynamic health diagnostics, anomaly detection, and predictive "what-if" stress simulations.
+A modular Python implementation of a **Digital Twin** designed for real-time computer system monitoring, health diagnostics, anomaly detection, and what-if stress simulations.
 
 ---
 
@@ -41,7 +41,7 @@ graph TD
 
 * **Real-Time Telemetry:** Monitors CPU utilization, memory pressure, disk consumption, network I/O, and active process count.
 * **Dynamic Health Scoring:** Evaluates system health on a 0-100 scale with Healthy, Warning, and Critical states.
-* **Predictive Simulation:** Executes "What-If" scenarios (Normal, Heavy, Critical Workloads) predicting operational state changes.
+* **What-If Simulation:** Executes stress scenarios (Normal, Heavy, Critical Workloads) predicting operational state changes.
 * **Fault Resilience:** Employs defensive exception handling preventing runtime crashes on permission or telemetry read errors.
 * **Automated CI/CD:** Verified via GitHub Actions test runners across all commits.
 * **Cloud Ready:** Immediate evaluation via pre-configured GitHub Codespaces (`.devcontainer`).
@@ -70,7 +70,7 @@ pip install -r requirements.txt
 ## How to Run
 
 ### Run the Real-Time Monitoring Dashboard
-Runs live diagnostics and predictive simulations on your active resources:
+Runs live diagnostics and stress simulations on your active resources:
 ```bash
 python -m digital_twin
 ```
