@@ -34,21 +34,21 @@ class SystemMonitor:
         # Resilient CPU read
         try:
             cpu_percent = float(psutil.cpu_percent(interval=1))
-        except Exception as exc:
+        except (psutil.Error, OSError) as exc:
             logger.warning("Failed to collect CPU metrics: %s", exc)
             cpu_percent = 0.0
 
         # Resilient Memory read
         try:
             memory_percent = float(psutil.virtual_memory().percent)
-        except Exception as exc:
+        except (psutil.Error, OSError) as exc:
             logger.warning("Failed to collect Memory metrics: %s", exc)
             memory_percent = 0.0
 
         # Resilient Disk read
         try:
             disk_percent = float(psutil.disk_usage(os.path.abspath(os.sep)).percent)
-        except Exception as exc:
+        except (psutil.Error, OSError) as exc:
             logger.warning("Failed to collect Disk metrics: %s", exc)
             disk_percent = 0.0
 
@@ -57,7 +57,7 @@ class SystemMonitor:
             network = psutil.net_io_counters()
             sent_bytes = network.bytes_sent if network else 0
             recv_bytes = network.bytes_recv if network else 0
-        except Exception as exc:
+        except (psutil.Error, OSError) as exc:
             logger.warning("Failed to collect Network metrics: %s", exc)
             sent_bytes = 0
             recv_bytes = 0
@@ -65,7 +65,7 @@ class SystemMonitor:
         # Resilient Process count
         try:
             running_processes = len(psutil.pids())
-        except Exception as exc:
+        except (psutil.Error, OSError) as exc:
             logger.warning("Failed to collect Process metrics: %s", exc)
             running_processes = 0
 
