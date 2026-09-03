@@ -1,58 +1,83 @@
 # Digital Twin for Computer Systems
 
-[![Tests](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Aryam92/digital-twin-for-computer-systems)
+[![CI](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryam92/digital-twin-for-computer-systems/actions)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo=Aryam92/digital-twin-for-computer-systems)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Python-based digital twin for monitoring, analyzing, and simulating
-computer system health.
+A production-grade Python implementation of a **Digital Twin** designed for real-time computer hardware and operating system monitoring, dynamic health diagnostics, anomaly detection, and predictive "what-if" stress simulations.
 
-The project creates a software representation of a real computer by
-collecting system metrics, evaluating resource health, detecting anomalies,
-and testing hypothetical system conditions through what-if simulations.
+---
 
-## Features
+## System Architecture
 
-- Real-time CPU monitoring
-- Real-time memory monitoring
-- Disk space monitoring
-- Network traffic monitoring
-- Running process monitoring
-- Health scoring from 0 to 100
-- Healthy / Warning / Critical status classification
-- Anomaly detection
-- Actionable recommendations
-- What-if system simulations
-- Terminal dashboard
-- Automated unit tests
-- Application logging
+```mermaid
+graph TD
+    A[Operating System / Hardware] -->|Real-time Metrics| B(Telemetry Collector: psutil)
+    B -->|Resilient Exception Handling| C[SystemSnapshot]
+    
+    subgraph Core Engine
+        C --> D[Diagnostic Engine: Health]
+        C --> E[Simulation Engine: What-If Scenarios]
+        F[(Centralized Config: config.py)] -.->|Thresholds| D
+    end
 
-## Architecture
+    D --> G[HealthReport & Anomalies]
+    E --> H[Simulated Projections]
 
-```text
-Real Computer
-     |
-     v
-SystemMonitor
-     |
-     v
-SystemSnapshot
-     |
-     +----------------------+
-     |                      |
-     v                      v
-Health Analyzer       Simulation Engine
-     |                      |
-     v                      v
-Health Report          Simulated Snapshot
-     |                      |
-     +----------+-----------+
-                |
-                v
-             Dashboard
+    G --> I[Dashboard / Presentation CLI]
+    H --> I
+```
 
+### Architecture Highlights
+* **Telemetry Collector (`monitoring`):** Gathers real-time OS performance counters with resilient fallbacks for hardware/permission faults.
+* **Diagnostic Engine (`health`):** Evaluates multi-variable resource health against centralized, configurable thresholds.
+* **Simulation Engine (`simulation`):** Generates immutable synthetic workloads to forecast hardware stress without affecting live OS stability.
+* **Configuration Module (`config`):** Centralized domain thresholds implemented via immutable dataclasses.
+
+---
+
+## Key Features
+
+* **Real-Time Telemetry:** Monitors CPU utilization, memory pressure, disk consumption, network I/O, and active process count.
+* **Dynamic Health Scoring:** Evaluates system health on a 0-100 scale with Healthy, Warning, and Critical states.
+* **Predictive Simulation:** Executes "What-If" scenarios (Normal, Heavy, Critical Workloads) predicting operational state changes.
+* **Fault Resilience:** Employs defensive exception handling preventing runtime crashes on permission or telemetry read errors.
+* **Automated CI/CD:** Verified via GitHub Actions test runners across all commits.
+* **Cloud Ready:** Immediate evaluation via pre-configured GitHub Codespaces (`.devcontainer`).
+
+---
+
+## Getting Started & Installation
+
+### Prerequisites
+* Python 3.10 or higher
+* `pip` package manager
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/Aryam92/digital-twin-for-computer-systems.git](https://github.com/Aryam92/digital-twin-for-computer-systems.git)
+cd digital-twin-for-computer-systems
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+---
 
 ## How to Run
 
-1. Navigate to the project directory:
-```cmd
-cd digital_twin
+### Run the Real-Time Monitoring Dashboard
+Runs live diagnostics and predictive simulations on your active resources:
+```bash
+python -m digital_twin
+```
+
+### Automated Testing Suite
+Run the 10-test suite verifying system health thresholds, anomalies, and simulation immutability:
+```bash
+set PYTHONPATH=src
+python -m unittest discover -s src/tests -v
+```
