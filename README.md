@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Aryam92/digital-twin-for-computer-systems/actions/workflows/tests.yml/badge.svg)](https://github.com/Aryam92/digital-twin-for-computer-systems/actions)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo=Aryam92/digital-twin-for-computer-systems)
-[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A production-grade Python implementation of a **Digital Twin** designed for real-time computer hardware and operating system monitoring, dynamic health diagnostics, anomaly detection, and predictive "what-if" stress simulations.
@@ -51,7 +51,7 @@ graph TD
 ## Getting Started & Installation
 
 ### Prerequisites
-* Python 3.10 or higher
+* Python 3.11 or higher
 * `pip` package manager
 
 ### 1. Clone the Repository
