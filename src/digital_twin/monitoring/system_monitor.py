@@ -1,11 +1,14 @@
-"""System monitoring models and implementations."""
+"""System monitoring models and implementations with resilient error handling."""
 
+import logging
 import os
 from dataclasses import dataclass
 from datetime import datetime
 from random import randint, uniform
 
 import psutil
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -22,23 +25,57 @@ class SystemSnapshot:
 
 
 class SystemMonitor:
-    """Collect real-time information from the operating system."""
+    """Collect real-time information from the operating system with safe fallbacks."""
 
     def collect_snapshot(self) -> SystemSnapshot:
-        """Collect the current system state using psutil."""
-        cpu_percent = psutil.cpu_percent(interval=1)
-        memory_percent = psutil.virtual_memory().percent
-        disk_percent = psutil.disk_usage(os.path.abspath(os.sep)).percent
-        network = psutil.net_io_counters()
-        running_processes = len(psutil.pids())
+        """Collect current system state defensively to avoid crashes on permission/hardware faults."""
+        now = datetime.now()
+
+        # Resilient CPU read
+        try:
+            cpu_percent = float(psutil.cpu_percent(interval=1))
+        except Exception as exc:
+            logger.warning("Failed to collect CPU metrics: %s", exc)
+            cpu_percent = 0.0
+
+        # Resilient Memory read
+        try:
+            memory_percent = float(psutil.virtual_memory().percent)
+        except Exception as exc:
+            logger.warning("Failed to collect Memory metrics: %s", exc)
+            memory_percent = 0.0
+
+        # Resilient Disk read
+        try:
+            disk_percent = float(psutil.disk_usage(os.path.abspath(os.sep)).percent)
+        except Exception as exc:
+            logger.warning("Failed to collect Disk metrics: %s", exc)
+            disk_percent = 0.0
+
+        # Resilient Network read
+        try:
+            network = psutil.net_io_counters()
+            sent_bytes = network.bytes_sent if network else 0
+            recv_bytes = network.bytes_recv if network else 0
+        except Exception as exc:
+            logger.warning("Failed to collect Network metrics: %s", exc)
+            sent_bytes = 0
+            recv_bytes = 0
+
+        # Resilient Process count
+        try:
+            running_processes = len(psutil.pids())
+        except Exception as exc:
+            logger.warning("Failed to collect Process metrics: %s", exc)
+            running_processes = 0
 
         return SystemSnapshot(
-            timestamp=datetime.now(),
+            timestamp=now,
             cpu_percent=cpu_percent,
             memory_percent=memory_percent,
             disk_percent=disk_percent,
-            network_sent_bytes=network.bytes_sent,
-            network_received_bytes=network.bytes_recv,
+            network_sent_bytes=sent_bytes,
+            network_received_bytes=recv_bytes,
             running_processes=running_processes,
         )
 
